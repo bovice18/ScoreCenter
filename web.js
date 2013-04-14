@@ -1,35 +1,38 @@
 var express = require('express');
-var app = express(express.logger());
-app.use(express.bodyParser());
-app.set('title', 'nodeapp');
+var mongo = require ("mongodb");
+
+var app = express();
+
+app.use(express.logger());
 
 // Mongo initialization
-var mongoUri = process.env.MONGOLAB_URI || 
-  process.env.MONGOHQ_URL || 
-  'mongodb://localhost/scorecenter';
-var mongo = require('mongodb');
-var db = mongo.Db.connect(mongoUri, function (error, databaseConnection) {
-	db = databaseConnection;
-});
+var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
+var collections = ["High_Scores"];  
+var db = require("mongojs").connect(databaseUrl, collections);
 
-app.get('/', function (request, response) {
+//enable CORS
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
+
+
+app.get('/', function(request, response) {
+	
 	/*
-		db.collection('NAME_OF_YOUR_COLLECTON_HERE...', function(er, collection) {
-			collection.find()...
-	*/
 	response.set('Content-Type', 'text/html');
-	response.send('<p>Hi!</p>');
-});
-
-app.get('/data.json', function(request, response) {
-	response.set('Content-Type', 'text/json');
-	response.send('{"status":"good"}');
-});
-
-app.get('/fool', function(request, response) {
+	
+	db.High_Scores.find({}).limit(10).sort({game_title:1}, 
+		function(err, scores){
+			if(err || !High_Scores) { console.log("no scores"); }
+			else { response.send(High_Scores);}			
+		});
+		*/
+		
 	response.set('Content-Type', 'text/html');
-	response.send(500, 'Something broke!');
+	response.send('<p>Hi!</p>');	
+		
 });
 
-// Oh joy! http://stackoverflow.com/questions/15693192/heroku-node-js-error-web-process-failed-to-bind-to-port-within-60-seconds-of
 app.listen(process.env.PORT || 3000);
