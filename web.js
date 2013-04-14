@@ -31,7 +31,7 @@ app.get('/', function(request, response) {
 		*/
 		
 	response.set('Content-Type', 'text/html');
-	response.send("Testing");	
+	response.send('<p>Hi!</p>');	
 		
 });
 /*
