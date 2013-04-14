@@ -1,9 +1,14 @@
 var express = require('express');
+var mongo = require ("mongodb");
 
-var app = express(express.logger());
+var app = express();
 
-app.use(express.bodyParser());
+app.use(express.logger());
 
+// Mongo initialization
+var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
+var collections = ["High_Scores"];  
+var db = require("mongojs").connect(databaseUrl, collections);
 
 //enable CORS
 app.all('/', function(req, res, next) {
@@ -12,23 +17,18 @@ app.all('/', function(req, res, next) {
   next();
  });
 
-// Mongo initialization
-var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
-var collections = ["High_Scores"];  
-var db = require("mongojs").connect(databaseUrl, collections);
-
 
 app.get('/', function(request, response) {
+	
 	response.set('Content-Type', 'text/html');
-	response.send("testing");
-	/*
-	response.set('Content-Type', 'text/html');
-	db.High_Scores.find({}).limit(10).sort({game_title:1}, function(err, scores){
-		if(err || !High_Scores) console.log("no scores");
-		else response.send(High_Scores);	
-			
-	} );
-	*/
+	
+	db.High_Scores.find({}).limit(10).sort({game_title:1}, 
+		function(err, scores){
+			if(err || !High_Scores) console.log("no scores");
+			else response.send(High_Scores);			
+		} 
+	);
+	
 });
 
 app.get('/highscores.json', function(request, response) {
