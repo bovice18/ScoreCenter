@@ -17,8 +17,7 @@ var db = require("mongojs").connect(databaseUrl, scores);
 
 
 app.get('/', function(request, response) {
-	response.send("Done");
-
+	response.send("Testing");
 });
 
 app.get('/highscores.json', function(request, response) {
