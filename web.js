@@ -8,7 +8,7 @@ app.use(express.logger());
 
 // Mongo initialization
 var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
-var collections = ["High_Scores"];  
+var collections = ["scores"];  
 var db = require("mongojs").connect(databaseUrl, collections);
 
 
@@ -24,16 +24,11 @@ app.get('/', function(request, response) {
 	
 	response.set('Content-Type', 'text/html');
 	
-	db.High_Scores.find({}).limit(10).sort({game_title:1}, 
+	db.scores.find({}).limit(10).sort({game_title:1}, 
 		function(err, scores){
-			if(err || !High_Scores) { response.send('<p>Didnt work!</p>'); }
-			else { response.send(High_Scores);}			
-		});
-		
-		
-	//response.set('Content-Type', 'text/html');
-	//response.send('<p>Hi!</p>');	
-		
+			if(err || !scores) { response.send('<p>Didnt work!</p>'); }
+			else { response.send(scores);}			
+		});		
 });
 
 app.listen(process.env.PORT || 3000);
