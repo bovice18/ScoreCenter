@@ -24,13 +24,11 @@ app.get('/', function(request, response) {
 	
 	db.High_Scores.find({}).limit(10).sort({game_title:1}, 
 		function(err, scores){
-			if(err || !High_Scores) console.log("no scores");
-			else response.send(High_Scores);			
-		} 
-	);
-	
+			if(err || !High_Scores) { console.log("no scores"); }
+			else { response.send(High_Scores);}			
+		});
 });
-
+/*
 app.get('/highscores.json', function(request, response) {
 
 	db.High_Scores.find({game_title: "frogger"}, function(err, users) {
@@ -38,9 +36,9 @@ app.get('/highscores.json', function(request, response) {
   	else High_Scores.forEach( function(score) {
     	response.send(score);
   	} );
-});
-});
 
+});
+*/
 //This is how we will complete assignment 5
 app.post("/submit.json", function(request, response){
 	//a few things go here
