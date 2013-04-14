@@ -28,7 +28,7 @@ app.get('/', function(request, response) {
 	db.High_Scores.find({}).limit(10).sort({game_title:1}, function(err, scores){
 		if(err || !High_Scores) console.log("no scores");
 		else response.send(High_Scores);	
-			} );
+			
 	} );
 });
 
