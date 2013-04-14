@@ -2,12 +2,8 @@ var express = require('express');
 
 var app = express(express.logger());
 
-app.configure(function () {
-    app.use(express.bodyParser());
-    app.use(express.methodOverride());
-    app.use(app.router);
-    app.use(express.logger());
-});
+app.use(express.bodyParser());
+
 
 //enable CORS
 app.all('/', function(req, res, next) {
@@ -23,7 +19,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 
 app.get('/', function(request, response) {
-	
+	response.set('Content-Type', 'text/html');
 	response.send("testing");
 	/*
 	response.set('Content-Type', 'text/html');
