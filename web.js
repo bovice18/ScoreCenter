@@ -5,12 +5,12 @@ var app = express();
 
 app.use(express.logger());
 
-/*
+
 // Mongo initialization
 var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
 var collections = ["High_Scores"];  
 var db = require("mongojs").connect(databaseUrl, collections);
-*/
+
 
 //enable CORS
 app.all('/', function(req, res, next) {
