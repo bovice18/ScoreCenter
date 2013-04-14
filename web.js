@@ -1,6 +1,6 @@
 var express = require('express');
 
-var app = express();
+var app = express(express.logger());
 
 app.configure(function () {
     app.use(express.bodyParser());
@@ -32,6 +32,7 @@ app.get('/', function(request, response) {
 		else response.send(High_Scores);	
 			
 	} );
+	
 });
 
 app.get('/highscores.json', function(request, response) {
