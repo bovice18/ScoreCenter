@@ -44,11 +44,11 @@ app.get('/highscores.json', function(request, response) {
   	} );
 
 });
-*/
+
 //This is how we will complete assignment 5
 app.post("/submit.json", function(request, response){
 	//a few things go here
 	response.send("Done");	
 	});
-
+*/
 app.listen(process.env.PORT || 3000);
