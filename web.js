@@ -2,22 +2,36 @@ var express = require('express');
 
 var app = express.createServer(express.logger());
 
-
 app.configure(function () {
     app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(app.router);
+    app.use(express.logger());
 });
 
+//enable CORS
+app.all('/', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+ });
 
 // Mongo initialization
 var databaseUrl = process.env.MONGOHQ_URL || 'mongodb://localhost/scorecenter';
-var scores = ["High_Scores"];  
-var db = require("mongojs").connect(databaseUrl, scores);
+var collections = ["High_Scores"];  
+var db = require("mongojs").connect(databaseUrl, collections);
 
 
 app.get('/', function(request, response) {
-	response.send("Testing");
+	var scoreList = "";
+	response.set('Content-Type', 'text/html');
+	db.High_Scores.find({}).limit(10).sort({game_title:1}, function(err, scores){
+		if(err || !High_Scores) console.log("no scores");
+		else High_Scores.forEach( function(score){
+			scoreList += JSON.stringify(score) + ",";
+			} );
+		response.send(scoreList);
+	} );
 });
 
 app.get('/highscores.json', function(request, response) {
