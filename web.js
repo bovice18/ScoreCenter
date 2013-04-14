@@ -17,7 +17,7 @@ var db = require("mongojs").connect(databaseUrl, scores);
 
 
 app.get('/', function(request, response) {
-
+	response.send("Done");
 
 });
 
