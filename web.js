@@ -22,7 +22,7 @@ app.all('/', function(req, res, next) {
 
 app.get('/', function(request, response) {
 	
-	/*
+	
 	response.set('Content-Type', 'text/html');
 	
 	db.High_Scores.find({}).limit(10).sort({game_title:1}, 
@@ -30,7 +30,7 @@ app.get('/', function(request, response) {
 			if(err || !High_Scores) { console.log("no scores"); }
 			else { response.send(High_Scores);}			
 		});
-		*/
+		
 		
 	response.set('Content-Type', 'text/html');
 	response.send('<p>Hi!</p>');	
