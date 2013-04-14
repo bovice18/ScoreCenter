@@ -23,7 +23,7 @@ var db = require("mongojs").connect(databaseUrl, collections);
 
 
 app.get('/', function(request, response) {
-	var scoreList = "";
+	
 	response.set('Content-Type', 'text/html');
 	db.High_Scores.find({}).limit(10).sort({game_title:1}, function(err, scores){
 		if(err || !High_Scores) console.log("no scores");
